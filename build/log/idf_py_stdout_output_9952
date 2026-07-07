@@ -1,0 +1,122 @@
+Command: ninja flash
+[1/10] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\ncs_workspace\Ai_voice_project\build\bootloader\esp-idf\esptool_py && E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe E:/esp/v5.5.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 E:/ncs_workspace/Ai_voice_project/build/bootloader/bootloader.bin"
+Bootloader binary size 0x5160 bytes. 0x2ea0 bytes (36%) free.
+[2/10] No install step for 'bootloader'
+[3/10] Completed 'bootloader'
+[4/10] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/Ai_voice_project.c.obj
+In file included from E:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c:17:
+E:/esp/v5.5.4/esp-idf/components/driver/deprecated/driver/i2s.h:27:2: warning: #warning "This set of I2S APIs has been deprecated, please include 'driver/i2s_std.h', 'driver/i2s_pdm.h' or 'driver/i2s_tdm.h' instead. if you want to keep using the old APIs and ignore this warning, you can enable 'Suppress legacy driver deprecated warning' option under 'I2S Configuration' menu in Kconfig" [-Wcpp]
+   27 | #warning "This set of I2S APIs has been deprecated, \
+      |  ^~~~~~~
+E:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c: In function 'afe_vad_init':
+E:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c:167:18: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  167 |     s_afe_handle = esp_afe_handle_from_config(afe_config);
+      |                  ^
+[5/10] Linking C static library esp-idf\main\libmain.a
+[6/10] Generating esp-idf/esp_system/ld/sections.ld
+[7/10] Linking CXX executable Ai_voice_project.elf
+[8/10] Generating binary image from built executable
+esptool.py v4.12.dev3
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated E:/ncs_workspace/Ai_voice_project/build/Ai_voice_project.bin
+[9/10] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\ncs_workspace\Ai_voice_project\build\esp-idf\esptool_py && E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe E:/esp/v5.5.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app E:/ncs_workspace/Ai_voice_project/build/partition_table/partition-table.bin E:/ncs_workspace/Ai_voice_project/build/Ai_voice_project.bin"
+Ai_voice_project.bin binary size 0x146c90 bytes. Smallest app partition is 0x400000 bytes. 0x2b9370 bytes (68%) free.
+[9/10] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\esp\v5.5.4\esp-idf\components\esptool_py && C:\Users\YUNBOTAI\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_PATH=E:/esp/v5.5.4/esp-idf -D SERIAL_TOOL=E:/Espressif/tools/python/v5.5.4/venv/Scripts/python.exe;;E:/esp/v5.5.4/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32s3 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=E:/ncs_workspace/Ai_voice_project/build -P E:/esp/v5.5.4/esp-idf/components/esptool_py/run_serial_tool.cmake"
+esptool.py --chip esp32s3 -p COM12 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 16MB 0x0 bootloader/bootloader.bin 0x10000 Ai_voice_project.bin 0x8000 partition_table/partition-table.bin 0x410000 srmodels/srmodels.bin
+esptool.py v4.12.dev3
+Serial port COM12
+Connecting....
+Chip is ESP32-S3 (QFN56) (revision v0.1)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+MAC: 7c:df:a1:e0:bd:84
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x00156fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x00410000 to 0x00457fff...
+SHA digest in image updated
+Compressed 20832 bytes to 13348...
+Writing at 0x00000000... (100 %)
+Wrote 20832 bytes (13348 compressed) at 0x00000000 in 0.6 seconds (effective 263.3 kbit/s)...
+Hash of data verified.
+Compressed 1338512 bytes to 762967...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001ca18... (4 %)
+Writing at 0x00029908... (6 %)
+Writing at 0x0003097c... (8 %)
+Writing at 0x00039882... (10 %)
+Writing at 0x00042609... (12 %)
+Writing at 0x000487b9... (14 %)
+Writing at 0x0004ef25... (17 %)
+Writing at 0x00054a34... (19 %)
+Writing at 0x00059fbc... (21 %)
+Writing at 0x0005fe3f... (23 %)
+Writing at 0x00065b17... (25 %)
+Writing at 0x0006c9c3... (27 %)
+Writing at 0x00088e98... (29 %)
+Writing at 0x000935a6... (31 %)
+Writing at 0x00099ac3... (34 %)
+Writing at 0x0009fb78... (36 %)
+Writing at 0x000a635e... (38 %)
+Writing at 0x000ac5ff... (40 %)
+Writing at 0x000b220e... (42 %)
+Writing at 0x000b85de... (44 %)
+Writing at 0x000be4b5... (46 %)
+Writing at 0x000c430d... (48 %)
+Writing at 0x000c964c... (51 %)
+Writing at 0x000ce5d0... (53 %)
+Writing at 0x000d3e83... (55 %)
+Writing at 0x000d9621... (57 %)
+Writing at 0x000debe1... (59 %)
+Writing at 0x000e40ae... (61 %)
+Writing at 0x000e990a... (63 %)
+Writing at 0x000eff36... (65 %)
+Writing at 0x000f597d... (68 %)
+Writing at 0x000fb614... (70 %)
+Writing at 0x001012cd... (72 %)
+Writing at 0x00106ccb... (74 %)
+Writing at 0x0010c7d9... (76 %)
+Writing at 0x0011251c... (78 %)
+Writing at 0x00117e10... (80 %)
+Writing at 0x0011d90b... (82 %)
+Writing at 0x0012351c... (85 %)
+Writing at 0x0012e03b... (87 %)
+Writing at 0x00134144... (89 %)
+Writing at 0x0013a6c7... (91 %)
+Writing at 0x00141655... (93 %)
+Writing at 0x001478fb... (95 %)
+Writing at 0x0014e20c... (97 %)
+Writing at 0x001532c4... (100 %)
+Wrote 1338512 bytes (762967 compressed) at 0x00010000 in 19.8 seconds (effective 539.9 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 120...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (120 compressed) at 0x00008000 in 0.1 seconds (effective 457.0 kbit/s)...
+Hash of data verified.
+Compressed 291152 bytes to 188292...
+Writing at 0x00410000... (8 %)
+Writing at 0x004150a3... (16 %)
+Writing at 0x0041a7b4... (25 %)
+Writing at 0x0041ffb8... (33 %)
+Writing at 0x00424ec7... (41 %)
+Writing at 0x00429bf5... (50 %)
+Writing at 0x0042e70f... (58 %)
+Writing at 0x00433562... (66 %)
+Writing at 0x004389ef... (75 %)
+Writing at 0x0043e901... (83 %)
+Writing at 0x00445fc9... (91 %)
+Writing at 0x004506ec... (100 %)
+Wrote 291152 bytes (188292 compressed) at 0x00410000 in 5.0 seconds (effective 470.1 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

@@ -1,0 +1,18 @@
+{
+  "idf.currentSetup": "E:\\esp\\v5.5.4\\esp-idf",
+  "idf.customExtraVars": {
+    "ADF_PATH": "E:\\Espressif\\tools\\esp-adf",
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "E:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=e:\\ncs_workspace\\Ai_voice_project\\build"
+  ],
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.flashType": "UART",
+  "idf.portWin": "COM12"
+}

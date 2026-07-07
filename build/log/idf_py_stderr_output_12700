@@ -1,0 +1,19 @@
+Command: E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe E:\esp\v5.5.4\esp-idf\tools/idf_monitor.py -p COM12 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf --force-color -m 'E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe' 'E:\esp\v5.5.4\esp-idf\tools\idf.py'
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM12 instead...[0m
+[0;33m--- esp-idf-monitor 1.9.0 on \\.\COM12 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x4037c05d: [0;33mpanic_abort[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m477[0m
+[0m--- 0x4037c025: [0;33mesp_system_abort[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/port/esp_system_chip.c[0m[0m:[1;31m87[0m
+[0m--- 0x40383479: [0;33m__assert_func[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/newlib/src/assert.c[0m[0m:[1;31m81[0m
+[0m--- 0x42052581: [0;33mbsp_audio_codec_microphone_init[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/managed_components/espressif__esp32_s3_korvo_1/esp32_s3_korvo_1.c[0m[0m:[1;31m147[0m
+[0m--- 0x4200af81: [0;33mmic_init[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c[0m[0m:[1;31m50[0m
+[0m--- 0x4200b13e: [0;33mapp_main[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c[0m[0m:[1;31m209[0m
+[0m--- 0x42076800: [0;33mmain_task[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/freertos/app_startup.c[0m[0m:[1;31m208[0m
+[0m--- 0x4037cd81: [0;33mvPortTaskWrapper[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x4037c1fd: [0;33mesp_restart_noos[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/port/soc/esp32s3/system_internal.c[0m[0m:[1;31m164[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m

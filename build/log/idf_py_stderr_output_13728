@@ -1,0 +1,11 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=1 E:\ncs_workspace\Ai_voice_project
+CMake Error at E:/esp/v5.5.4/esp-idf/tools/cmake/build.cmake:330 (message):
+  Failed to resolve component 'esp_websocket_client' required by component
+  'main': unknown name.
+Call Stack (most recent call first):
+  E:/esp/v5.5.4/esp-idf/tools/cmake/build.cmake:379 (__build_resolve_and_add_req)
+  E:/esp/v5.5.4/esp-idf/tools/cmake/build.cmake:687 (__build_expand_requirements)
+  E:/esp/v5.5.4/esp-idf/tools/cmake/project.cmake:752 (idf_build_process)
+  CMakeLists.txt:9 (project)
+
+

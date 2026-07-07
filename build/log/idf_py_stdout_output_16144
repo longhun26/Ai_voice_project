@@ -1,0 +1,28 @@
+Command: ninja flash
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- ccache will be used for faster recompilation
+-- git rev-parse returned 'fatal: not a git repository (or any of the parent directories): .git'
+-- Could not use 'git describe' to determine PROJECT_VER.
+-- Building ESP-IDF components for target esp32s3
+NOTICE: Processing 11 dependencies:
+NOTICE: [1/11] espressif/button (4.2.0)
+NOTICE: [2/11] espressif/cjson (1.7.19~2)
+NOTICE: [3/11] espressif/cmake_utilities (1.1.1)
+NOTICE: [4/11] espressif/dl_fft (0.5.0)
+NOTICE: [5/11] espressif/esp-dsp (1.8.0)
+NOTICE: [6/11] espressif/esp-sr (2.4.6)
+NOTICE: [7/11] espressif/esp32_s3_korvo_1 (3.0.1)
+NOTICE: [8/11] espressif/esp_codec_dev (1.5.11)
+NOTICE: [9/11] espressif/led_indicator (2.0.2)
+NOTICE: [10/11] espressif/led_strip (3.0.3)
+NOTICE: [11/11] idf (5.5.4)
+-- CONFIG_ESP32P4_SELECTS_REV_LESS_V3 is 
+-- IDF_VERSION_MAJOR is 5
+-- IDF_VERSION_MINOR is 5
+-- IDF_VERSION_PATCH is 4
+-- TARGET_LIB_PATH is set to: esp32s3
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5 SoCs
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+C:\Users\YUNBOTAI\.espressif\tools\cmake\3.30.2\bin\cmake.exe --regenerate-during-build -SE:\ncs_workspace\Ai_voice_project -BE:\ncs_workspace\Ai_voice_project\build

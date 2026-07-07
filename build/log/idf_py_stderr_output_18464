@@ -1,0 +1,176 @@
+Command: E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe E:\esp\v5.5.4\esp-idf\tools/idf_monitor.py -p COM12 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf --force-color -m 'E:\Espressif\tools\python\v5.5.4\venv\Scripts\python.exe' 'E:\esp\v5.5.4\esp-idf\tools\idf.py'
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM12 instead...[0m
+[0;33m--- esp-idf-monitor 1.9.0 on \\.\COM12 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x4037c05d: [0;33mpanic_abort[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m477[0m
+[0m--- 0x4037c025: [0;33mesp_system_abort[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/port/esp_system_chip.c[0m[0m:[1;31m87[0m
+[0m--- 0x40383479: [0;33m__assert_func[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/newlib/src/assert.c[0m[0m:[1;31m81[0m
+[0m--- 0x42052575: [0;33mbsp_audio_codec_microphone_init[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/managed_components/espressif__esp32_s3_korvo_1/esp32_s3_korvo_1.c[0m[0m:[1;31m147[0m
+[0m--- 0x4200af75: [0;33mmic_init[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c[0m[0m:[1;31m50[0m
+[0m--- 0x4200b132: [0;33mapp_main[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c[0m[0m:[1;31m208[0m
+[0m--- 0x420767f4: [0;33mmain_task[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/freertos/app_startup.c[0m[0m:[1;31m208[0m
+[0m--- 0x4037cd81: [0;33mvPortTaskWrapper[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x4037c1fd: [0;33mesp_restart_noos[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/port/soc/esp32s3/system_internal.c[0m[0m:[1;31m164[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x4037853e: [0;33mesp_crosscore_isr[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x40377975: [0;33m_xt_lowint1[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42045b77: [0;33mdl_c_atrous_conv1d_i16o16k16b16[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/dl_lib/base/c/dl_c_atrous_conv1d_i16o16k16b16.c[0m[0m:[1;31m94[0m
+[0m--- 0x42029def: [0;33mdl_nn_atrous_conv1d[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/dl_lib/nn/dl_nn_atrous_conv1d.c[0m[0m:[1;31m50[0m
+[0m--- 0x420233f5: [0;33mwakenet9_model_run_step1[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/wakenet/wakenet9_quantized.c[0m[0m:[1;31m723[0m
+[0m--- 0x42024471: [0;33mmodel_detect[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/wakenet/wakenet9_quantized.c[0m[0m:[1;31m987[0m
+[0m--- 0x4202456b: [0;33mmodel_detect_mfcc[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/wakenet/wakenet9_quantized.c[0m[0m:[1;31m1025[0m
+[0m--- 0x4200b546: [0;33mafe_wn_run_multi_mic[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/esp_audio_front_end/esp_afe_sr_2mic.c[0m[0m:[1;31m422[0m
+[0m--- 0x4200c17e: [0;33mafe_fetch_with_delay[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/esp_audio_front_end/esp_afe_sr_2mic.c[0m[0m:[1;31m769[0m
+[0m--- 0x4200c1a9: [0;33mafe_fetch[0m[0m at [0;32m/home/sunxiangyu/workspace/esp_sr_lib/components/esp_audio_front_end/esp_afe_sr_2mic.c[0m[0m:[1;31m780[0m
+[0m--- 0x4200adf9: [0;33mafe_fetch_task[0m[0m at [0;32mE:/ncs_workspace/Ai_voice_project/main/Ai_voice_project.c[0m[0m:[1;31m157[0m
+[0m--- 0x4037cd81: [0;33mvPortTaskWrapper[0m[0m at [0;32mE:/esp/v5.5.4/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c05d 0x4037c025 0x40383479 0x42052575 0x4200af75 0x4200b132 0x420767f4 0x4037cd81: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c05d', '0x4037c025', '0x40383479', '0x42052575', '0x4200af75', '0x4200b132', '0x420767f4', '0x4037cd81']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c1fd: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c1fd']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4200b146: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4200b146']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c01b: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c01b']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c05d 0x4037c025 0x40383361 0x4037c01b 0x4200b146 0x420767f4 0x4037cd81: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c05d', '0x4037c025', '0x40383361', '0x4037c01b', '0x4200b146', '0x420767f4', '0x4037cd81']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c1fd: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c1fd']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4200b146: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4200b146']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c01b: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c01b']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c05d 0x4037c025 0x40383361 0x4037c01b 0x4200b146 0x420767f4 0x4037cd81: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c05d', '0x4037c025', '0x40383361', '0x4037c01b', '0x4200b146', '0x420767f4', '0x4037cd81']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c1fd: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c1fd']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+[1;31m--- Error: ClearCommError failed (PermissionError(13, 'Access is denied.', None, 5))[0m
+[0;33m--- Waiting for the device to reconnect[0m[0;33m.[0m[0;33m.[0m[0;33m.[0m[0;33m.[0m[0;33m.[0m[0;33m.[0m[0;33m[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4200b146: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4200b146']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c01b: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c01b']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c05d 0x4037c025 0x40383361 0x4037c01b 0x4200b146 0x420767f4 0x4037cd81: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c05d', '0x4037c025', '0x40383361', '0x4037c01b', '0x4200b146', '0x420767f4', '0x4037cd81']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c1fd: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c1fd']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c05d 0x4037c025 0x40383479 0x42052575 0x4200af75 0x4200b132 0x420767f4 0x4037cd81: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c05d', '0x4037c025', '0x40383479', '0x42052575', '0x4200af75', '0x4200b132', '0x420767f4', '0x4037cd81']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\Ai_voice_project.elf 0x4037c1fd: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\Ai_voice_project.elf', '0x4037c1fd']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403cb700: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403cb700']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+C:\Users\YUNBOTAI\.espressif\tools\xtensa-esp-elf\esp-14.2.0_20260121\xtensa-esp-elf\bin\xtensa-esp-elf-addr2line.exe: 'E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf': No such file
+[1;31mxtensa-esp32s3-elf-addr2line -fiaC -e E:\ncs_workspace\Ai_voice_project\build\bootloader\bootloader.elf 0x403c8924: Command '['xtensa-esp32s3-elf-addr2line', '-fiaC', '-e', 'E:\\ncs_workspace\\Ai_voice_project\\build\\bootloader\\bootloader.elf', '0x403c8924']' returned non-zero exit status 1.[0m
+[1;31mELF file is missing or has changed, the build folder was probably modified.[0m
+[0;33m--- Warning: ELF file not found. You need to build & flash the project before running 'monitor', and the binary on the device must match the one in the build directory exactly. [0m
+[0m
