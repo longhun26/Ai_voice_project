@@ -30,11 +30,11 @@ static const char *TAG = "VAD_DEMO";
 
 static esp_websocket_client_handle_t s_ws_client = NULL;
 static RingbufHandle_t s_audio_ring_buf = NULL;
-static bool s_is_forwarding = false; // 门控开关：唤醒后为真，VAD结束后为假
+static bool s_is_forwarding = false; 
 
 /* ----------------------- 配置参数 ----------------------- */
 #define AUDIO_SAMPLE_RATE      16000
-#define AUDIO_CHANNELS_MIC     4          /* 【修改】Korvo-1 硬件底层标准 TDM 采集为 4 通道 (3麦克风 + 1参考声道) */
+#define AUDIO_CHANNELS_MIC     4          
 #define AUDIO_BITS             16
 #define I2S_FRAME_MS           20         
 
@@ -136,6 +136,7 @@ static esp_err_t mic_init(void)
         .sample_rate     = AUDIO_SAMPLE_RATE,
         .channel         = AUDIO_CHANNELS_MIC, /* 传入 4 通道 */
         .bits_per_sample = AUDIO_BITS,
+        .channel_mask    = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3),
     };
     ESP_RETURN_ON_ERROR(esp_codec_dev_open(s_mic_dev, &fs), TAG, "codec open fail");
 
@@ -146,23 +147,30 @@ static esp_err_t mic_init(void)
 }
 
 /* ============================================================
- * 2. AFE + VAD 初始化 【重点修改】
+ * 2. AFE + VAD 初始化
  * ============================================================ */
 static esp_err_t afe_vad_init(void)
-{
+{   
     srmodel_list_t *models = esp_srmodel_init("model");
     if (models == NULL) {
         ESP_LOGE("AFE", "Failed to init models");
         return ESP_FAIL;
     }
-    afe_config_t *afe_config = afe_config_init("MNR", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
+    afe_config_t *afe_config = afe_config_init("MMMR", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
     if (afe_config == NULL) {
         ESP_LOGE("AFE", "Failed to init afe config");
         return ESP_FAIL;
     }
-
-    /* 【配置微调】明确告诉 AFE 当前输入总共 4 通道，其中 3 个是麦克风，1 个是放音参考 */
-
+    // 🌟 【核心微调：给底层 AFE 降噪】
+    afe_config->vad_init = true;
+    
+    // 1. 乐鑫官方定义：vad_mode 值越小，语音触发概率越低（越不敏感）。默认通常是 VAD_MODE_1 或 2，调小它
+    afe_config->vad_mode = VAD_MODE_0; 
+    // 2. 提高判定为人声的最小持续时间（默认128ms）。
+    // 将其拉长到 240ms 甚至 300ms，这样耗时极短的突发杂音（如敲击、爆音）直接在底层就被过滤掉了
+    afe_config->vad_min_speech_ms = 240; 
+    // 3. 判定为持续噪音/静音的最小时间（默认1000ms），可保持或微调
+    afe_config->vad_min_noise_ms = 800;
     afe_config->pcm_config.total_ch_num = AUDIO_CHANNELS_MIC; 
     afe_config->pcm_config.mic_num = 3;
     afe_config->pcm_config.ref_num = 1;
@@ -181,6 +189,8 @@ static esp_err_t afe_vad_init(void)
     
     afe_config_free(afe_config);
     ESP_LOGI("AFE", "AFE VAD initialized successfully");
+
+    
    
     return ESP_OK;
 }
@@ -190,11 +200,11 @@ static esp_err_t afe_vad_init(void)
  * ============================================================ */
 static void audio_feed_task(void *arg)
 {
-    /* 此时 s_afe_handle 已经有正确的全局地址，不会再崩溃 */
     int feed_chunksize = s_afe_handle->get_feed_chunksize(s_afe_data);
+    int feed_channels = s_afe_handle->get_feed_channel_num(s_afe_data);
     
     int16_t *feed_buf = heap_caps_malloc(
-        feed_chunksize * AUDIO_CHANNELS_MIC * sizeof(int16_t),
+        feed_chunksize * feed_channels * sizeof(int16_t),
         MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
 
     if (feed_buf == NULL) {
@@ -208,7 +218,7 @@ static void audio_feed_task(void *arg)
     while (1) {
         esp_err_t ret = esp_codec_dev_read(
             s_mic_dev, feed_buf,
-            feed_chunksize * AUDIO_CHANNELS_MIC * sizeof(int16_t));
+            feed_chunksize * feed_channels * sizeof(int16_t));
 
         if (ret != ESP_OK) {
             ESP_LOGW(TAG, "codec read err: %d", ret);
@@ -228,7 +238,7 @@ static void audio_feed_task(void *arg)
  * ============================================================ */
 static void afe_fetch_task(void *arg)
 {
-    ESP_LOGI(TAG, "afe_fetch_task started");
+    ESP_LOGI(TAG, "afe_fetch_task started (纯 VAD 触发模式)");
     bool last_state = false;
 
     while (1) {
@@ -239,31 +249,33 @@ static void afe_fetch_task(void *arg)
             continue;
         }
 
-        /* 1. 唤醒词触发：打开网络流式转发大门 */
-        if (res->wakeup_state == WAKENET_DETECTED) {
-            ESP_LOGW(TAG, "[WAKEWORD DETECTED] -> 开启网络音频流式传输！");
-            s_is_forwarding = true;
-            if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
-                esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, portMAX_DELAY);
-            }
-        }
-        /* 2. VAD 状态机检测 */
+        /* 1. VAD 状态机检测（取代原有的唤醒词逻辑） */
         bool speech_now = (res->vad_state == VAD_SPEECH);
+        
         if (speech_now != last_state) {
             ESP_LOGI(TAG, "VAD状态变更: %s", speech_now ? "有人说话 START" : "没人说话 END");
             
-            // 如果用户说完了，且当前正在转发，则关闭大门
-            if (!speech_now && s_is_forwarding) {
-                ESP_LOGW(TAG, "[SPEECH END] -> 关闭网络音频传输门控。");
-                s_is_forwarding = false;
+            if (speech_now) {
+                ESP_LOGW(TAG, "[VAD SPEECH START] -> 开启网络音频流式传输！");
+                s_is_forwarding = true;
+                
                 if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
-                    esp_websocket_client_send_text(s_ws_client, "SPEECH_DONE", 11, portMAX_DELAY);
+                    // 通知服务器：开始录音
+                    esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, portMAX_DELAY);
+                }
+            } else {
+                // 🛑 【没人说话】：关闭大门，停止转发
+                if (s_is_forwarding) {
+                    ESP_LOGW(TAG, "[VAD SPEECH END] -> 关闭网络音频传输门控。");
+                    s_is_forwarding = false;
+                    
+                    if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
+                        esp_websocket_client_send_text(s_ws_client, "SPEECH_DONE", 11, portMAX_DELAY);
+                    }
                 }
             }
             last_state = speech_now;
         }
-
-        /* 3. 门控音频转发：只有在大门开启、且确实有有效音频时，才送入环形缓冲区 */
         if (s_is_forwarding && res->data != NULL && res->data_size > 0) {
             // 将 AFE 处理完的 16kHz/16bit 单声道 PCM 塞入环形缓冲区
             BaseType_t rem = xRingbufferSend(s_audio_ring_buf, res->data, res->data_size, 0);
@@ -301,20 +313,18 @@ void app_main(void)
     network_init();
 
     // 3. 创建 64KB 的流式音频 RingBuffer（用于平滑网络抖动）
-    s_audio_ring_buf = xRingbufferCreate(64 * 1024, RINGBUF_TYPE_NOSPLIT);
+    s_audio_ring_buf = xRingbufferCreateWithCaps(64 * 1024, RINGBUF_TYPE_NOSPLIT, MALLOC_CAP_SPIRAM);
     if (s_audio_ring_buf == NULL) {
         ESP_LOGE("MAIN", "环形缓冲区创建失败！");
         return;
     }
-
-    // 4. 创建独立的网络异步发送任务（分配到 CPU 1，与 AFE 的 CPU 0 错开）
-    xTaskCreatePinnedToCore(websocket_send_task, "ws_send_task", 4 * 1024, NULL, 5, NULL, 1);
     ESP_ERROR_CHECK(mic_init());
     ESP_ERROR_CHECK(afe_vad_init());
 
     s_vad_state_queue = xQueueCreate(10, sizeof(vad_event_t));
     configASSERT(s_vad_state_queue);
-
+   
+    xTaskCreatePinnedToCore(websocket_send_task, "ws_send_task", 4 * 1024, NULL, 5, NULL, 1);
     xTaskCreatePinnedToCore(audio_feed_task,   "audio_feed",   4096, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(afe_fetch_task,    "afe_fetch",    4096, NULL, 5, NULL, 1);
     xTaskCreatePinnedToCore(vad_consumer_task, "vad_consumer", 4096, NULL, 4, NULL, 0);
