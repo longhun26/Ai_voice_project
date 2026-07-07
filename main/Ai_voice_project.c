@@ -101,7 +101,22 @@ void network_init(void) {
     esp_wifi_set_max_tx_power(40);            // 将 Wi-Fi 最大发射功率减半（默认是 80，改为 40 约为 10dBm）
     ESP_LOGI("WIFI", "已限制 Wi-Fi 发射功率并开启 Modem PS 以减少射频干扰");
 }
-
+static void websocket_send_task(void *arg) {
+    ESP_LOGI("WS_TASK", "异步网络发送任务已启动");
+    while (1) {
+        size_t item_size;
+        // 阻塞等待 RingBuffer 里的音频数据
+        char *item = (char *)xRingbufferReceive(s_audio_ring_buf, &item_size, portMAX_DELAY);
+        if (item != NULL) {
+            // 如果连接正常，直接发送二进制数据帧
+            if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
+                esp_websocket_client_send_bin(s_ws_client, item, item_size, portMAX_DELAY);
+            }
+            // 释放 RingBuffer 内存
+            vRingbufferReturnItem(s_audio_ring_buf, (void *)item);
+        }
+    }
+}
 /* ============================================================
  * 1. BSP 麦克风初始化
  * ============================================================ */
@@ -226,21 +241,20 @@ static void afe_fetch_task(void *arg)
 
         /* 1. 唤醒词触发：打开网络流式转发大门 */
         if (res->wakeup_state == WAKENET_DETECTED) {
-            ESP_LOGW(TAG, "🔥 [WAKEWORD DETECTED] -> 开启网络音频流式传输！");
+            ESP_LOGW(TAG, "[WAKEWORD DETECTED] -> 开启网络音频流式传输！");
             s_is_forwarding = true;
             if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
                 esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, portMAX_DELAY);
             }
         }
-
         /* 2. VAD 状态机检测 */
         bool speech_now = (res->vad_state == VAD_SPEECH);
         if (speech_now != last_state) {
-            ESP_LOGI(TAG, "VAD 状态变更: %s", speech_now ? "有人说话 START" : "没人说话 END");
+            ESP_LOGI(TAG, "VAD状态变更: %s", speech_now ? "有人说话 START" : "没人说话 END");
             
             // 如果用户说完了，且当前正在转发，则关闭大门
             if (!speech_now && s_is_forwarding) {
-                ESP_LOGW(TAG, "🛑 [SPEECH END] -> 关闭网络音频传输门控。");
+                ESP_LOGW(TAG, "[SPEECH END] -> 关闭网络音频传输门控。");
                 s_is_forwarding = false;
                 if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
                     esp_websocket_client_send_text(s_ws_client, "SPEECH_DONE", 11, portMAX_DELAY);
@@ -283,6 +297,18 @@ void app_main(void)
     ESP_LOGI(TAG, "Waiting for hardware power stabilization...");
     vTaskDelay(pdMS_TO_TICKS(200));
 
+    // 2. 初始化网络（连接 Wi-Fi 并准备 WebSocket）
+    network_init();
+
+    // 3. 创建 64KB 的流式音频 RingBuffer（用于平滑网络抖动）
+    s_audio_ring_buf = xRingbufferCreate(64 * 1024, RINGBUF_TYPE_NOSPLIT);
+    if (s_audio_ring_buf == NULL) {
+        ESP_LOGE("MAIN", "环形缓冲区创建失败！");
+        return;
+    }
+
+    // 4. 创建独立的网络异步发送任务（分配到 CPU 1，与 AFE 的 CPU 0 错开）
+    xTaskCreatePinnedToCore(websocket_send_task, "ws_send_task", 4 * 1024, NULL, 5, NULL, 1);
     ESP_ERROR_CHECK(mic_init());
     ESP_ERROR_CHECK(afe_vad_init());
 

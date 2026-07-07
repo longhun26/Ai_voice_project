@@ -18,7 +18,7 @@ set(HEAD_HASH)
 file(READ "E:/ncs_workspace/Ai_voice_project/build/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
 
 string(STRIP "${HEAD_CONTENTS}" HEAD_CONTENTS)
-set(GIT_DIR "E:/esp/v5.5.4/esp-idf/.git")
+set(GIT_DIR "E:/ncs_workspace/Ai_voice_project/.git")
 # handle git-worktree
 if(EXISTS "${GIT_DIR}/commondir")
 	file(READ "${GIT_DIR}/commondir" GIT_DIR_NEW LIMIT 1024)
