@@ -97,6 +97,9 @@ void network_init(void) {
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
+    esp_wifi_set_ps(WIFI_PS_MIN_MODEM);       // 开启调制解调器省电模式，平滑电流波峰
+    esp_wifi_set_max_tx_power(40);            // 将 Wi-Fi 最大发射功率减半（默认是 80，改为 40 约为 10dBm）
+    ESP_LOGI("WIFI", "已限制 Wi-Fi 发射功率并开启 Modem PS 以减少射频干扰");
 }
 
 /* ============================================================
