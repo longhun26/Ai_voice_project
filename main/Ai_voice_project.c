@@ -45,10 +45,13 @@ static esp_afe_sr_data_t     *s_afe_data = NULL;
 
 static QueueHandle_t s_vad_state_queue = NULL;
 
+typedef enum {
+    VAD_EVENT_START,
+    VAD_EVENT_END,
+} vad_event_type_t;
+
 typedef struct {
-    bool        speech_detected;   
-    int16_t    *pcm_data;          
-    size_t      pcm_len;           
+    vad_event_type_t type;
 } vad_event_t;
 static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) 
 {
@@ -238,6 +241,7 @@ static void audio_feed_task(void *arg)
         }
 
         s_afe_handle->feed(s_afe_data, feed_buf);
+        vTaskDelay(1); 
     }
 
     free(feed_buf);
@@ -267,22 +271,19 @@ static void afe_fetch_task(void *arg)
             ESP_LOGI(TAG, "VAD状态变更: %s", speech_now ? "有人说话 START" : "没人说话 END");
             
             if (speech_now) {
-                ESP_LOGW(TAG, "[VAD SPEECH START] -> 开启网络音频流式传输！");
                 s_is_forwarding = true;
-                
-                if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
-                    // 通知服务器：开始录音
-                    esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, pdMS_TO_TICKS(50));
-                }
+               vad_event_t evt = {
+                .type = VAD_EVENT_START,
+                };
+                xQueueSend(s_vad_state_queue, &evt, 0);
             } else {
                 // 🛑 【没人说话】：关闭大门，停止转发
                 if (s_is_forwarding) {
-                    ESP_LOGW(TAG, "[VAD SPEECH END] -> 关闭网络音频传输门控。");
                     s_is_forwarding = false;
-                    
-                    if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
-                        esp_websocket_client_send_text(s_ws_client, "SPEECH_DON", 11, pdMS_TO_TICKS(50));
-                    }
+                    vad_event_t evt = {
+                    .type = VAD_EVENT_END,
+                    };
+                    xQueueSend(s_vad_state_queue, &evt, 0);
                 }
             }
             last_state = speech_now;
@@ -304,12 +305,40 @@ static void afe_fetch_task(void *arg)
 static void vad_consumer_task(void *arg)
 {
     vad_event_t evt;
+
     while (1) {
         if (xQueueReceive(s_vad_state_queue, &evt, portMAX_DELAY) == pdTRUE) {
-            ESP_LOGD(TAG, "Got %d bytes of speech PCM to forward", (int)evt.pcm_len);
+
+            if (!s_ws_client ||
+                !esp_websocket_client_is_connected(s_ws_client)) {
+                continue;
+            }
+            switch (evt.type) {
+
+            case VAD_EVENT_START:
+
+                ESP_LOGI(TAG, "Send WAKE_UP");
+                esp_websocket_client_send_text(
+                    s_ws_client,
+                    "WAKE_UP",
+                    strlen("WAKE_UP"),
+                    pdMS_TO_TICKS(100));
+                break;
+
+            case VAD_EVENT_END:
+
+                ESP_LOGI(TAG, "Send SPEECH_DONE");
+                esp_websocket_client_send_text(
+                    s_ws_client,
+                    "SPEECH_DONE",
+                    strlen("SPEECH_DONE"),
+                    pdMS_TO_TICKS(100));
+                break;
+            }
         }
     }
 }
+
 
 /* ============================================================
  * app_main
