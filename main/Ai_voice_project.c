@@ -34,7 +34,7 @@ static bool s_is_forwarding = false;
 
 /* ----------------------- 配置参数 ----------------------- */
 #define AUDIO_SAMPLE_RATE      16000
-#define AUDIO_CHANNELS_MIC     4          
+#define AUDIO_CHANNELS_MIC     4         
 #define AUDIO_BITS             16
 #define I2S_FRAME_MS           20         
 
@@ -50,21 +50,31 @@ typedef struct {
     int16_t    *pcm_data;          
     size_t      pcm_len;           
 } vad_event_t;
-static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) {
+static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) 
+{
+    static bool s_ws_initialized = false;
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         ESP_LOGW("WIFI", "Wi-Fi 断开，正在尝试重连...");
         esp_wifi_connect();
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI("WIFI", "连接成功！获取到 IP:" IPSTR, IP2STR(&event->ip_info.ip));
-        
-        // 获取到 IP 后，启动 WebSocket 客户端
-        esp_websocket_client_config_t ws_cfg = { .uri = PC_WEBSOCKET_URL };
+        if (!s_ws_initialized) {
+        esp_websocket_client_config_t ws_cfg = {
+            .uri = PC_WEBSOCKET_URL,
+            .reconnect_timeout_ms = 3000,   // 断线后自动重连
+            .network_timeout_ms = 5000,
+        };
         s_ws_client = esp_websocket_client_init(&ws_cfg);
         esp_websocket_client_start(s_ws_client);
-        ESP_LOGI("WS", "WebSocket 客户端已启动，正在连接电脑...");
+        s_ws_initialized = true;
+        ESP_LOGI("WS", "WebSocket 客户端已启动");
+        } else {
+            ESP_LOGI("WS", "网络恢复，WebSocket 将自动重连");
+        }   
     }
 }
 
@@ -156,11 +166,12 @@ static esp_err_t afe_vad_init(void)
         ESP_LOGE("AFE", "Failed to init models");
         return ESP_FAIL;
     }
-    afe_config_t *afe_config = afe_config_init("MMMR", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
+    afe_config_t *afe_config = afe_config_init("MMRM", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
     if (afe_config == NULL) {
         ESP_LOGE("AFE", "Failed to init afe config");
         return ESP_FAIL;
     }
+    afe_config->wakenet_init = false;   // 明确关闭，纯 VAD 模式不需要
     // 🌟 【核心微调：给底层 AFE 降噪】
     afe_config->vad_init = true;
     
@@ -261,7 +272,7 @@ static void afe_fetch_task(void *arg)
                 
                 if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
                     // 通知服务器：开始录音
-                    esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, portMAX_DELAY);
+                    esp_websocket_client_send_text(s_ws_client, "WAKE_UP", 7, pdMS_TO_TICKS(50));
                 }
             } else {
                 // 🛑 【没人说话】：关闭大门，停止转发
@@ -270,7 +281,7 @@ static void afe_fetch_task(void *arg)
                     s_is_forwarding = false;
                     
                     if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
-                        esp_websocket_client_send_text(s_ws_client, "SPEECH_DONE", 11, portMAX_DELAY);
+                        esp_websocket_client_send_text(s_ws_client, "SPEECH_DON", 11, pdMS_TO_TICKS(50));
                     }
                 }
             }
@@ -324,7 +335,7 @@ void app_main(void)
     s_vad_state_queue = xQueueCreate(10, sizeof(vad_event_t));
     configASSERT(s_vad_state_queue);
    
-    xTaskCreatePinnedToCore(websocket_send_task, "ws_send_task", 4 * 1024, NULL, 5, NULL, 1);
+    xTaskCreatePinnedToCore(websocket_send_task, "ws_send_task", 4 * 1024, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(audio_feed_task,   "audio_feed",   4096, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(afe_fetch_task,    "afe_fetch",    4096, NULL, 5, NULL, 1);
     xTaskCreatePinnedToCore(vad_consumer_task, "vad_consumer", 4096, NULL, 4, NULL, 0);
