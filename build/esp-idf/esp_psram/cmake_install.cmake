@@ -1,4 +1,4 @@
-# Install script for directory: E:/esp/v5.5.4/esp-idf/components/esp_psram
+# Install script for directory: D:/esp/v5.5.4/esp-idf/components/esp_psram
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,16 +34,16 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/YUNBOTAI/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20260121/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump.exe")
+  set(CMAKE_OBJDUMP "D:/Espressif/tools/xtensa-esp-elf/esp-14.2.0_20260121/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/ncs_workspace/Ai_voice_project/build/esp-idf/esp_psram/device/cmake_install.cmake")
+  include("D:/Work/code/korvo_ai/Ai_voice_project/build/esp-idf/esp_psram/device/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/ncs_workspace/Ai_voice_project/build/esp-idf/esp_psram/xip_impl/cmake_install.cmake")
+  include("D:/Work/code/korvo_ai/Ai_voice_project/build/esp-idf/esp_psram/xip_impl/cmake_install.cmake")
 endif()
 

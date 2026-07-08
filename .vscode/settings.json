@@ -1,5 +1,5 @@
 {
-  "idf.currentSetup": "E:\\esp\\v5.5.4\\esp-idf",
+  "idf.currentSetup": "D:\\esp\\v5.5.4\\esp-idf",
   "idf.customExtraVars": {
     "ADF_PATH": "E:\\Espressif\\tools\\esp-adf",
     "IDF_TARGET": "esp32s3"

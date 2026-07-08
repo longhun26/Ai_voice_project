@@ -23,10 +23,10 @@
 #include "model_path.h"
 
 static const char *TAG = "VAD_DEMO";
-// 填入你的 Wi-Fi 和 电脑 IP 📢
-#define ESP_WIFI_SSID      "siyue1L"
-#define ESP_WIFI_PASS      "siyuexiongdi"
-#define PC_WEBSOCKET_URL   "ws://192.168.31.149:8765"
+// 填入你的 Wi-Fi 和 电脑 IP 
+#define ESP_WIFI_SSID      "CU_T76n"
+#define ESP_WIFI_PASS      "zqfgc7q6"
+#define PC_WEBSOCKET_URL   "ws://192.168.18.7:8765"
 
 static esp_websocket_client_handle_t s_ws_client = NULL;
 static RingbufHandle_t s_audio_ring_buf = NULL;
@@ -137,7 +137,7 @@ static esp_err_t mic_init(void)
 {
     ESP_LOGI(TAG, "Init BSP I2C ...");
     ESP_ERROR_CHECK(bsp_i2c_init());
-
+    vTaskDelay(pdMS_TO_TICKS(50)); 
     ESP_LOGI(TAG, "Init BSP microphone (ES7210) ...");
     s_mic_dev = bsp_audio_codec_microphone_init();
     if (s_mic_dev == NULL) {
@@ -169,7 +169,7 @@ static esp_err_t afe_vad_init(void)
         ESP_LOGE("AFE", "Failed to init models");
         return ESP_FAIL;
     }
-    afe_config_t *afe_config = afe_config_init("MMRM", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
+    afe_config_t *afe_config = afe_config_init("MMRN", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
     if (afe_config == NULL) {
         ESP_LOGE("AFE", "Failed to init afe config");
         return ESP_FAIL;
@@ -186,7 +186,7 @@ static esp_err_t afe_vad_init(void)
     // 3. 判定为持续噪音/静音的最小时间（默认1000ms），可保持或微调
     afe_config->vad_min_noise_ms = 800;
     afe_config->pcm_config.total_ch_num = AUDIO_CHANNELS_MIC; 
-    afe_config->pcm_config.mic_num = 3;
+    afe_config->pcm_config.mic_num = 2;
     afe_config->pcm_config.ref_num = 1;
     s_afe_handle = esp_afe_handle_from_config(afe_config);
     if (s_afe_handle == NULL) {
@@ -347,7 +347,7 @@ void app_main(void)
 {
     ESP_LOGI(TAG, "=== ESP32-S3-Korvo-1 v4.0 VAD Demo (BSP + ESP-ADF/ESP-SR) ===");
     ESP_LOGI(TAG, "Waiting for hardware power stabilization...");
-    vTaskDelay(pdMS_TO_TICKS(200));
+    vTaskDelay(pdMS_TO_TICKS(500));
 
     // 2. 初始化网络（连接 Wi-Fi 并准备 WebSocket）
     network_init();
