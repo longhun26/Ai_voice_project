@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "Ai_voice_project",
-    "project_version":    "51cbfcd-dirty",
+    "project_version":    "6424c26-dirty",
     "project_path":       "D:/Work/code/korvo_ai/Ai_voice_project",
     "idf_path":           "D:/esp/v5.5.4/esp-idf",
     "build_dir":          "D:/Work/code/korvo_ai/Ai_voice_project/build",

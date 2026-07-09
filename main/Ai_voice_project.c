@@ -124,6 +124,7 @@ static void websocket_send_task(void *arg) {
             // 如果连接正常，直接发送二进制数据帧
             if (s_ws_client && esp_websocket_client_is_connected(s_ws_client)) {
                 esp_websocket_client_send_bin(s_ws_client, item, item_size, portMAX_DELAY);
+                vTaskDelay(pdMS_TO_TICKS(1)); 
             }
             // 释放 RingBuffer 内存
             vRingbufferReturnItem(s_audio_ring_buf, (void *)item);
@@ -169,7 +170,7 @@ static esp_err_t afe_vad_init(void)
         ESP_LOGE("AFE", "Failed to init models");
         return ESP_FAIL;
     }
-    afe_config_t *afe_config = afe_config_init("MMRN", models, AFE_TYPE_SR, AFE_MODE_HIGH_PERF);
+    afe_config_t *afe_config = afe_config_init("MMRN", models, AFE_TYPE_SR, AEC_MODE_FD_HIGH_PERF);
     if (afe_config == NULL) {
         ESP_LOGE("AFE", "Failed to init afe config");
         return ESP_FAIL;
@@ -177,9 +178,9 @@ static esp_err_t afe_vad_init(void)
     afe_config->wakenet_init = false;   // 明确关闭，纯 VAD 模式不需要
     // 🌟 【核心微调：给底层 AFE 降噪】
     afe_config->vad_init = true;
-    
+    afe_config->ns_init = true;
     // 1. 乐鑫官方定义：vad_mode 值越小，语音触发概率越低（越不敏感）。默认通常是 VAD_MODE_1 或 2，调小它
-    afe_config->vad_mode = VAD_MODE_0; 
+    afe_config->vad_mode = VAD_MODE_2; 
     // 2. 提高判定为人声的最小持续时间（默认128ms）。
     // 将其拉长到 240ms 甚至 300ms，这样耗时极短的突发杂音（如敲击、爆音）直接在底层就被过滤掉了
     afe_config->vad_min_speech_ms = 240; 
@@ -188,6 +189,9 @@ static esp_err_t afe_vad_init(void)
     afe_config->pcm_config.total_ch_num = AUDIO_CHANNELS_MIC; 
     afe_config->pcm_config.mic_num = 2;
     afe_config->pcm_config.ref_num = 1;
+    afe_config->agc_init = true;
+    afe_config->agc_mode = 2;// 开启 AFE 级别的 AGC
+    afe_config_print(afe_config); 
     s_afe_handle = esp_afe_handle_from_config(afe_config);
     if (s_afe_handle == NULL) {
         ESP_LOGE("AFE", "Failed to get afe handle");
@@ -203,9 +207,6 @@ static esp_err_t afe_vad_init(void)
     
     afe_config_free(afe_config);
     ESP_LOGI("AFE", "AFE VAD initialized successfully");
-
-    
-   
     return ESP_OK;
 }
 
